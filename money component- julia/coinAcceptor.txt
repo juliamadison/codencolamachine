@@ -1,0 +1,18 @@
+- variables -
+int quarters
+string validCoin = "quarter"
+
+- methods - 
+
+coinsInserted()
+    coin = input("enter coin: ")
+    validateCoin(coin)
+
+validateCoin(coin)
+    if coin != validCoin
+        rejectCoin()
+    else
+        return
+
+rejectCoin(coin)
+    print("coin ejected")
