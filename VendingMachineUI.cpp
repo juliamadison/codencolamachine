@@ -12,10 +12,17 @@ int main() {
 
 VendingMachineUI::VendingMachineUI() {
     
-    slots.push_back({ "Cola", 1, 5 });      // Slot 1: Cola, $1, 5 in stock
-    slots.push_back({ "Lemonade", 1, 0 }); // Slot 2: Lemonade, $1, out of stock
-    slots.push_back({ "Water", 1, 3 });   // Slot 3: Water, $1, 3 in stock
+    slots.push_back({ "Cola", 1, 3 });             // Slot 1: Cola, $1, 3 in stock
+    slots.push_back({ "Lemonade", 1, 0 });        // Slot 2: Lemonade, $1, out of stock
+    slots.push_back({ "Water", 1, 3 });          // Slot 3: Water, $1, 3 in stock
+    slots.push_back({ "Ginger Ale", 1, 3 });    // Slot 4: Ginger Ale
+    slots.push_back({ "Orange Soda", 1, 3 });  // Slot 5: Orange Soda 
+    slots.push_back({ "Iced Tea", 1, 3 });    // Slot 6: Iced Tea
+    slots.push_back({ "Sanitizer", 1, 3 });  // Slot 7: Sanitizer
+    slots.push_back({ "Pepsi", 1, 3 });     // Slot 8: Pepsi
+   
 }
+
 
 void VendingMachineUI::displayMenu() {
     cout << "\n--- Vending Machine Menu ---" << endl;
