@@ -11,23 +11,15 @@
 
 class MaintenanceSystem {
 private:
-	std::vector<Beverage> beverageCatalog;
-	const std::string accessCode;
-	static const int MAX_DRINK_REFILL = 50;
-	static const int MAX_LABELNAME_LENGTH = 20;
-    const float MIN_COST_VALUE = 0.50f;
-    const float MAX_COST_VALUE = 10.00f;
-
-std::vector<Beverage> prepareBeverage();
-	bool verifyMaintenanceUser();
-	void ShowInventory();
-	void refillBeverage();
-	void updateBeverageDetails();
-	void showMaintenanceMenu();
-
+	boll isMaintenanceMode;
+	
 public:
-	MaintenanceSystem();
-	void start();
+    void enterMaintenaceMode();
+    void exitMaintenaceMode();
+    bool inMaintenaceMode();
+    void checkInventory();
+    void refillChangeBin();
+
 };
 
 #endif
