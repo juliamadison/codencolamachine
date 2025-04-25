@@ -8,24 +8,6 @@
 
 #include "Beverage.h"
 
-class VendingMachine {
-private:
-   int machineID
-   std::string location;
-   float totalSales;
-   std::string status
-
-public:
-   VendingMachine(int id, cosnt std::string& loc)
-     : machineID(id), location(loc), totalSales(0.0f), status("OK") {}
-
-void refillSlot(int slotID);
-void collectBin();
-std::string checkDiagonostics();
-void resetMachine();
-
-};
-
 
 class MaintenanceSystem {
 private:
