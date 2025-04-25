@@ -5,9 +5,11 @@
 
 using namespace std;
 
+// The constructor sets up the access code and loads the drink catalog.
 MaintenanceSystem::MaintenanceSystem() : accessCode("1234") {
 
-    beverageCatalog = prepareBeverage();
+    beverageCatalog = prepareBeverage(); // Load The List Of Drinks
+
 
 }
 
@@ -15,14 +17,15 @@ bool MaintenanceSystem::verifyMaintenanceUser() {
     string displayCode;
     std::cout << "Enter maintenance access code: ";
     std::cin >> displayCode;
-    if (displayCode == accessCode) {
+    if (displayCode == accessCode) { // Allow Access
         return true;
     }
     else {
-        std::cout << "Access Denied" << std::endl;
+        std::cout << "Access Denied" << std::endl; //Acess Denied
         return false;
     }
 }
+
 
 void MaintenanceSystem::ShowInventory() {
 	cout << "Present Inventory:" << endl;
@@ -31,17 +34,18 @@ void MaintenanceSystem::ShowInventory() {
 	}
 }
 
+// Ask the user to pick a drink and restock it
 void MaintenanceSystem::refillBeverage() {
     int Basis, amount;
     cout << "Select beverage to refill: ";
     cin >> Basis;
 
     if (Basis < 0 || Basis >= static_cast<int>(beverageCatalog.size())) {
-        cout << "Invalid selection." << endl;
+        cout << "Invalid selection." << endl;  // Check if the selection index is valid
         return;
     }
 
-    cout << "Enter quantity to add (Max: " << MAX_DRINK_REFILL << "): ";
+    cout << "Enter quantity to add (Max: " << MAX_DRINK_REFILL << "): "; // Check if the refill amount is valid
     cin >> amount;
 
     if (amount <= 0 || amount > MAX_DRINK_REFILL) {
@@ -50,19 +54,20 @@ void MaintenanceSystem::refillBeverage() {
     }
 
     beverageCatalog[Basis].stock += amount;
-    cout << "Stock updated." << endl;
+    cout << "Stock updated." << endl; // Adjust the stock quantity
 }
 
 void MaintenanceSystem::updateBeverageDetails() {
     ShowInventory();
     int Basis;
-    cout << "Select beverage to update:" << endl;
+    cout << "Select beverage to update:" << endl; // Update drink details like name or price
+    cin >> Basis;
     cin >> Basis;
 
     if (cin.fail() || Basis < 1 || static_cast<size_t>(Basis) > beverageCatalog.size()) {
         cout << "Invalid selection." << endl;
         cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Check the index input
         return;
     }
     
@@ -70,10 +75,10 @@ void MaintenanceSystem::updateBeverageDetails() {
     cout << "1. Update Name" << endl;
     cout << "2. Update Price" << endl;
     cout << "3. Cancel" << endl;
-    cin >> selection;
+    cin >> selection; // Ask the user what they want to change
 
     if (cin.fail()) {
-        cout << "Invalid input." << endl;
+        cout << "Invalid input." << endl; // Manage cases of invalid input
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         return;
@@ -82,7 +87,7 @@ void MaintenanceSystem::updateBeverageDetails() {
     switch (selection) {
     case 1: {
         string newLabel;
-        cout << "Enter new name (Max " << MAX_LABELNAME_LENGTH << " characters): ";
+        cout << "Enter new name (Max " << MAX_LABELNAME_LENGTH << " characters): "; // Change the drink name
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, newLabel);
         if (newLabel.empty() || newLabel.length() > MAX_LABELNAME_LENGTH) {
@@ -94,7 +99,7 @@ void MaintenanceSystem::updateBeverageDetails() {
     }
     case 2: {
         float newCharge;
-        cout << "Enter new price ($" << MIN_COST_VALUE << " - $" << MAX_COST_VALUE << "): ";
+        cout << "Enter new price ($" << MIN_COST_VALUE << " - $" << MAX_COST_VALUE << "): "; // Change the drink price
         cin >> newCharge;
         if (newCharge < MIN_COST_VALUE || newCharge > MAX_COST_VALUE) {
             cout << "Error: The Price must be between $" << MIN_COST_VALUE << " and $" << MAX_COST_VALUE << endl;
@@ -106,13 +111,14 @@ void MaintenanceSystem::updateBeverageDetails() {
     case 3:
         return;
     standard:
-        cout << "Invalid option." << endl;
+        cout << "Invalid option." << endl; //option to cancel
         return;
     }
 
     cout << "Information updated." << endl;
 }
 
+// Menu of maintenance tasks
 void MaintenanceSystem::showMaintenanceMenu() {
     int selection;
     while (true) {
@@ -124,6 +130,7 @@ void MaintenanceSystem::showMaintenanceMenu() {
         cout << "Enter choice: ";
         cin >> selection;
 
+	 // Handle cases of non-integer input
         if (cin.fail()) {
             cout << "Invalid input. Please enter a number between 1 and 4." << endl;
             cin.clear();
@@ -131,6 +138,7 @@ void MaintenanceSystem::showMaintenanceMenu() {
             continue;
         }
 
+	// Direct to the chosen function
         switch (selection) {
         case 1:
             ShowInventory();
@@ -143,15 +151,16 @@ void MaintenanceSystem::showMaintenanceMenu() {
             break;
         case 4:
             cout << "Depart maintenance mode..." << endl;
-            return;
+            return; // Exit Menu
         default:
             cout << "Invalid option." << endl;
         }
     }
 }
 
+// Start the maintenance process
 void MaintenanceSystem::start() {
     if (verifyMaintenanceUser()) {
-        showMaintenanceMenu();
+        showMaintenanceMenu(); // Continue if the access code
     }
 }
