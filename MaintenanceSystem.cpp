@@ -10,13 +10,18 @@ MaintenanceSystem::MaintenanceSystem() : accessCode("1234") {
 
     beverageCatalog = prepareBeverage(); // Load The List Of Drinks
 
+}
 
+std::vector<Beverage> MaintenanceSystem::prepareBeverage() {
+	return{
+		
+	};
 }
 
 bool MaintenanceSystem::verifyMaintenanceUser() {
     string displayCode;
-    std::cout << "Enter maintenance access code: ";
-    std::cin >> displayCode;
+    cout << "Enter maintenance access code: ";
+    cin >> displayCode;
     if (displayCode == accessCode) { // Allow Access
         return true;
     }
