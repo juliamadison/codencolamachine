@@ -1,33 +1,27 @@
 #include "MaintenanceSystem.h"
-#include "soda.h"
+#include "Beverage.h"
 #include <iostream>
 #include <limits>
 
 using namespace std;
 
-MaintenanceSystem::MaintenanceSystem() : slotID("1234") {
+MaintenanceSystem::MaintenanceSystem() : accessCode("1234") {
 
-    sodaSlots = initalizeSlots();
+    beverageCatalog = prepareBeverage();
 
 }
 
-std::vector<Beverage> MaintenanceSystem::initalizeSlots() {
+std::vector<Beverage> MaintenanceSystem::prepareBeverage() {
 	return{
-		Beverage("Cola", 1f, 3),
-		Beverage("Sprite", 1f, 3),
-		Beverage("Water", 1f, 3),
-		Beverage("Lemonade", 1f, 3),
-		Beverage("Ginger Ale", 1f, 3),
-		Beverage("Orange Soda", 1f, 3),
-		Beverage("Iced Tea", 1f, 3),
-		Beverage("Sanitizer", 1f, 3),
-		Beverage("Pepsi", 1f, 3)
+		Beverage("Cola", 1.50f, 12),
+		Beverage("Sprite", 1.25f, 9),
+		Beverage("Water", 1.00f, 14)
 	};
 }
 
 bool MaintenanceSystem::verifyMaintenanceUser() {
     string displayCode;
-    std::cout << "Enter SlotID: ";
+    std::cout << "Enter maintenance access code: ";
     std::cin >> displayCode;
     if (displayCode == accessCode) {
         return true;
@@ -38,20 +32,16 @@ bool MaintenanceSystem::verifyMaintenanceUser() {
     }
 }
 
-void MaintenanceSystem::displayInventory() {
-	cout << "Current Inventory:" << endl;
-	for (const auto& slot : sodaSlots) {
-		cout << "Slot" << slot.slotID << ":" << slot.name << " |$" << slot.price << "|Stock: " << slot.stock << "/" << slot.maxCapacity;
-		if(slot.isSlotFull()) cout << " [FULL]";
-		else if (slot.isSlotEmpty()) cout << " [EMPTY]";
-		cout << endl;
+void MaintenanceSystem::ShowInventory() {
+	cout << "Present Inventory:" << endl;
+	for (size_t i = 0; i < beverageCatalog.size(); ++i) {
+		cout << i << ". " << beverageCatalog[i].name << " | Price: $" << beverageCatalog[i].price << " | Stock: " << beverageCatalog[i].stock << endl;
 	}
 }
 
 void MaintenanceSystem::refillBeverage() {
     int Basis, amount;
-    displayinventory();
-    cout << "Select slot to refill";
+    cout << "Select beverage to refill: ";
     cin >> Basis;
 
     if (Basis < 0 || Basis >= static_cast<int>(beverageCatalog.size())) {
@@ -59,11 +49,11 @@ void MaintenanceSystem::refillBeverage() {
         return;
     }
 
-    cout << "Enter refill quantity (Max: " << MAX_DRINK_REFILL << "): ";
+    cout << "Enter quantity to add (Max: " << MAX_DRINK_REFILL << "): ";
     cin >> amount;
 
     if (amount <= 0 || amount > MAX_DRINK_REFILL) {
-        cout << "Invalid refill amount." << endl;
+        cout << "Error: Amount must be between 1 and " << MAX_DRINK_REFILL << endl;
         return;
     }
 
@@ -71,14 +61,16 @@ void MaintenanceSystem::refillBeverage() {
     cout << "Stock updated." << endl;
 }
 
-void MaintenanceSystem::updateSlotDetails() {
+void MaintenanceSystem::updateBeverageDetails() {
     ShowInventory();
     int Basis;
-    cout << "Select slot to update:" << endl;
+    cout << "Select beverage to update:" << endl;
     cin >> Basis;
 
-    if (Basis < 0 || Basic >= static_cast<int>(sodaSlots>size()) {
-        cout << "Invalid Slot." << endl;
+    if (cin.fail() || Basis < 1 || static_cast<size_t>(Basis) > beverageCatalog.size()) {
+        cout << "Invalid selection." << endl;
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         return;
     }
     
@@ -87,19 +79,25 @@ void MaintenanceSystem::updateSlotDetails() {
     cout << "2. Update Price" << endl;
     cout << "3. Cancel" << endl;
     cin >> selection;
+
+    if (cin.fail()) {
+        cout << "Invalid input." << endl;
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return;
     }
     
     switch (selection) {
     case 1: {
         string newLabel;
         cout << "Enter new name (Max " << MAX_LABELNAME_LENGTH << " characters): ";
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, newLabel);
         if (newLabel.empty() || newLabel.length() > MAX_LABELNAME_LENGTH) {
-            cout << "Invalid name." << endl;
+            cout << "Error: Name must be 1–" << MAX_LABELNAME_LENGTH << " characters" << endl;
             return;
         }
-        sodaSlots[Basis].name = newLabel;
+        beverageCatalog[Basis].name = newLabel;
         break;
     }
     case 2: {
@@ -120,19 +118,26 @@ void MaintenanceSystem::updateSlotDetails() {
         return;
     }
 
-    cout << "Slot updated successfully." << endl;
+    cout << "Information updated." << endl;
 }
 
-void MaintenanceSystem::MaintenanceMenu() {          // Note/Question from UI (I have this in the UI part but should I keep it there or remove it from there and keep it here)
+void MaintenanceSystem::showMaintenanceMenu() {
     int selection;
     while (true) {
         cout << "--- Maintenance Menu ---" << endl;
         cout << "1. Show Inventory" << endl;
-        cout << "2. Refill Slot" << endl;
-        cout << "3. Update Slot" << endl;
+        cout << "2. Fill Beverage" << endl;
+        cout << "3. Update Beverage" << endl;
         cout << "4. Exit" << endl;
         cout << "Enter choice: ";
         cin >> selection;
+
+        if (cin.fail()) {
+            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
 
         switch (selection) {
         case 1:
@@ -145,7 +150,7 @@ void MaintenanceSystem::MaintenanceMenu() {          // Note/Question from UI (I
             updateBeverageDetails();
             break;
         case 4:
-            cout << "Departing maintenance mode..." << endl;
+            cout << "Depart maintenance mode..." << endl;
             return;
         default:
             cout << "Invalid option." << endl;
@@ -155,9 +160,6 @@ void MaintenanceSystem::MaintenanceMenu() {          // Note/Question from UI (I
 
 void MaintenanceSystem::start() {
     if (verifyMaintenanceUser()) {
-        MaintenanceMenu();
-    } else {
-	    cout << "Access Denied." << endl;
+        showMaintenanceMenu();
     }
 }
-
