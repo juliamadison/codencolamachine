@@ -9,21 +9,14 @@ int main() {
     return 0;
 }
 
-// Constructor for initializing vending machine slots
+// Constructor - No beverage definitions here; to be populated externally
 VendingMachineUI::VendingMachineUI() {
 
-    slots.push_back({ "Cola", 1, 3 });             // Slot 1: Cola, $1, 3 in stock
-    slots.push_back({ "Lemonade", 1, 0 });        // Slot 2: Lemonade, $1, out of stock
-    slots.push_back({ "Water", 1, 3 });          // Slot 3: Water, $1, 3 in stock
-    slots.push_back({ "Ginger Ale", 1, 3 });    // Slot 4: Ginger Ale
-    slots.push_back({ "Orange Soda", 1, 3 });  // Slot 5: Orange Soda 
-    slots.push_back({ "Iced Tea", 1, 3 });    // Slot 6: Iced Tea
-    slots.push_back({ "Sanitizer", 1, 3 });  // Slot 7: Sanitizer
-    slots.push_back({ "Pepsi", 1, 3 });     // Slot 8: Pepsi
-
+    // Note: slots empty here — other component will populate
+    
 }
 
-// Function to display the main menu options
+// Displays the main menu options to the user
 void VendingMachineUI::displayMenu() {
     cout << "\n--- Vending Machine Menu ---" << endl;
     cout << "1. View Available Beverages" << endl;
@@ -32,125 +25,71 @@ void VendingMachineUI::displayMenu() {
     cout << "Enter choice: ";
 }
 
+// Displays all available beverages in 2 rows and 4 columns format
+
 void VendingMachineUI::showAvailableBeverages() {
+    cout << "\n--- Available Beverages (25 cents each) ---" << endl;
     for (size_t i = 0; i < slots.size(); ++i) {
-        cout << i + 1 << ". ";
+
+        // Displays index and beverage name; shows OUT OF STOCK if quantity is 0
+
         if (slots[i].quantity > 0) {
-            cout << slots[i].name << " - Price: $" << slots[i].price << ", Quantity: " << slots[i].quantity << endl;
+            cout << i + 1 << ". " << slots[i].name << "\t";
+        } else {
+            cout << i + 1 << ". " << slots[i].name << " (OUT OF STOCK)\t";
         }
-        else {
-            cout << slots[i].name << " - OUT OF STOCK" << endl;
-        }
+
+        // After every 4th item, move to the next line
+
+        if ((i + 1) % 4 == 0) cout << endl;
     }
+    cout << endl;
 }
 
+// Checks if slot index is valid 
 bool VendingMachineUI::isValidSlot(int slotIndex) {
     return slotIndex >= 0 && slotIndex < static_cast<int>(slots.size());
 }
 
-// Handles the process of selecting and purchasing a beverage
+// Handles the process of selecting a beverage 
 void VendingMachineUI::selectBeverage() {
     int choice;
-    cout << "Enter slot number of beverage you'd like to purchase: ";
-    if (!(cin >> choice)) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input. Please enter a number.\n";
-        return;
-    }
+    cout << "Enter slot number of beverage you'd like to select: ";
+    cin >> choice;
+    choice -= 1;                        // Adjust for 0-based index
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    choice -= 1;
-
+    // Validates slot index and ensures if beverage is in stock or not
     if (!isValidSlot(choice) || slots[choice].quantity == 0) {
         cout << "Invalid slot or out of stock." << endl;
         return;
     }
 
-    int insertedAmount;
-    cout << "Insert $" << slots[choice].price << " to proceed: ";
-    if (!(cin >> insertedAmount)) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid amount entered. Transaction canceled." << endl;
-        return;
-    }
+    // Confirms beverage selection (Money transaction confirmed within money component)
+    cout << "You selected: " << slots[choice].name << endl;
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    if (insertedAmount == slots[choice].price) {
-        slots[choice].quantity--;
-        cout << "Please take your beverage: " << slots[choice].name << endl;
-    }
-    else if (insertedAmount < slots[choice].price) {
-        cout << "Insufficient funds. Please add more or cancel." << endl;
-        cout << "1. Add more coins\n2. Cancel\nEnter choice: ";
-        int subChoice;
-        if (!(cin >> subChoice)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Transaction canceled." << endl;
-            return;
-        }
-
-        if (subChoice == 1) {
-            int moreCoins;
-            cout << "Enter additional amount: ";
-            if (!(cin >> moreCoins)) {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Invalid input. Transaction canceled." << endl;
-                return;
-            }
-
-            int total = insertedAmount + moreCoins;
-            if (total >= slots[choice].price) {
-                slots[choice].quantity--;
-                cout << "Please take your beverage: " << slots[choice].name << endl;
-                if (total > slots[choice].price) {
-                    cout << "Change returned: $" << (total - slots[choice].price) << endl;
-                }
-            }
-            else {
-                cout << "Still insufficient. Transaction canceled." << endl;
-            }
-        }
-        else {
-            cout << "Transaction canceled." << endl;
-        }
-    }
-    else {
-        slots[choice].quantity--;
-        cout << "Please take your beverage: " << slots[choice].name << endl;
-        cout << "Change returned: $" << (insertedAmount - slots[choice].price) << endl;
-    }
+    // Note: here you'd notify the money component or transaction handler
 }
 
+// Main UI loop to run the program interface
 void VendingMachineUI::run() {
     while (true) {
-        displayMenu();
+        displayMenu();                 // Show menu options
         int choice;
-        if (!(cin >> choice)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a number from the menu.\n";
-            continue;
-        }
-
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> choice;                 // Get user input
 
         switch (choice) {
-        case 1:
-            showAvailableBeverages();
-            break;
-        case 2:
-            selectBeverage();
-            break;
-        case 3:
-            cout << "Thank you! Goodbye." << endl;
-            return;
-        default:
-            cout << "Invalid choice. Try again." << endl;
+            case 1:
+                showAvailableBeverages(); // Show beverage list
+                break;
+            case 2:
+                selectBeverage();         // Handle beverage selection
+                break;
+            case 3:
+                cout << "Thank you! Goodbye." << endl; // Exit
+                return;
+            default:
+                cout << "Invalid choice. Try again." << endl; // Invalid input handler
         }
     }
 }
+

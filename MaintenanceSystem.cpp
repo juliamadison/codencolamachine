@@ -123,7 +123,7 @@ void MaintenanceSystem::updateSlotDetails() {
     cout << "Slot updated successfully." << endl;
 }
 
-void MaintenanceSystem::MaintenanceMenu() {
+void MaintenanceSystem::MaintenanceMenu() {          // Note/Question from UI (I have this in the UI part but should I keep it there or remove it from there and keep it here)
     int selection;
     while (true) {
         cout << "--- Maintenance Menu ---" << endl;

@@ -13,8 +13,6 @@ struct Beverage {
 };
 
 class VendingMachineUI {
-private:
-    std::vector<Beverage> slots;
 
 public:
     VendingMachineUI();
@@ -25,6 +23,8 @@ public:
     bool isValidSlot(int slotIndex);
     void run();
 
+private:
+    std::vector<Beverage> slots;
 };
 
 #endif
