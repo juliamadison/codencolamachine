@@ -136,13 +136,13 @@ void MaintenanceSystem::MaintenanceMenu() {
 
         switch (selection) {
         case 1:
-            ShowInventory();
+            checkInventory();
             break;
         case 2:
-            refillBeverage();
+            refilSlot();
             break;
         case 3:
-            updateBeverageDetails();
+            updateSlotDetails();
             break;
         case 4:
             cout << "Departing maintenance mode..." << endl;
