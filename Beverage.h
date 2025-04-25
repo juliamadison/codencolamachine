@@ -4,13 +4,21 @@
 
 #include <string>
 
-class Beverage {
-public:
-    std::string name;
-    float price;
-    int stock;
+class VendingMachine {
+private:
+   int machineID;
+   std::string location;
+   float totalSales;
+   std::string status;
 
-    Beverage(std::string name, float price, int stock) : name(name), price(price), stock(stock) {}
+public:
+    VendingMachine(int id, const std::string&loc);
+
+    void refillSlot(int slotID);
+    void collectBin();
+    std::string checkDiagnostics();
+    void resetMachine();
+    
 };
 
 #endif 
