@@ -21,12 +21,14 @@ public:
     
 };
 
+// Shows a drink item in inventory
 class Beverage {
 public:
-    std::string name;
-    float price;
-    int stock;
+    std::string name; //Title Of The Drink
+    float cost; //Cost per unit
+    int stock; //Stock Quantity available
 
+    //Constructor to set up all properites
     Beverage(std::string name, float price, int stock) : name(name), price(price), stock(stock) {}
 }; //Old Code
 
