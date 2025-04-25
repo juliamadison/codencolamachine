@@ -9,7 +9,7 @@
 #include "Beverage.h"
 
 
-class MaintenanceSystem {
+class MaintenanceSystem { //New Code
 private:
 	bool isMaintenanceMode;
 	
@@ -22,6 +22,27 @@ public:
     void checkInventory(const Dispenser& d);
     void refillChangeBin(const Money& m);
 
+};
+
+class MaintenanceSystem { //Old Code
+private:
+	std::vector<Beverage> beverageCatalog;
+	const std::string accessCode;
+	static const int MAX_DRINK_REFILL = 50;
+	static const int MAX_LABELNAME_LENGTH = 20;
+    const float MIN_COST_VALUE = 0.50f;
+    const float MAX_COST_VALUE = 10.00f;
+
+	std::vector<Beverage> prepareBeverage();
+	bool verifyMaintenanceUser();
+	void ShowInventory();
+	void refillBeverage();
+	void updateBeverageDetails();
+	void showMaintenanceMenu();
+
+public:
+	MaintenanceSystem();
+	void start();
 };
 
 #endif
