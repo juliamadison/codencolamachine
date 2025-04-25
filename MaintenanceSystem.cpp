@@ -11,7 +11,7 @@ MaintenanceSystem::MaintenanceSystem() : slotID("1234") {
 
 }
 
-std::vector<Beverage> MaintenanceSystem::initalizeBeverage() {
+std::vector<Beverage> MaintenanceSystem::initalizeSlots() {
 	return{
 		Beverage("Cola", 1f, 3),
 		Beverage("Sprite", 1f, 3),
@@ -71,7 +71,7 @@ void MaintenanceSystem::refillBeverage() {
     cout << "Stock updated." << endl;
 }
 
-void MaintenanceSystem::updateBeverageDetails() {
+void MaintenanceSystem::updateSlotDetails() {
     ShowInventory();
     int Basis;
     cout << "Select slot to update:" << endl;
