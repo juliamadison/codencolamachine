@@ -4,7 +4,7 @@
 
 #include <string>
 
-class VendingMachine {
+class VendingMachine { //New  Code
 private:
    int machineID;
    std::string location;
@@ -20,5 +20,14 @@ public:
     void resetMachine();
     
 };
+
+class Beverage {
+public:
+    std::string name;
+    float price;
+    int stock;
+
+    Beverage(std::string name, float price, int stock) : name(name), price(price), stock(stock) {}
+}; //Old Code
 
 #endif 
