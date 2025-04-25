@@ -30,3 +30,10 @@ bool MaintenanceSystem::verifyMaintenanceUser() {
         return false;
     }
 }
+
+// Start the maintenance process
+void MaintenanceSystem::start() {
+    if (verifyMaintenanceUser()) {
+        showMaintenanceMenu(); // Continue if the access code
+    }
+}
