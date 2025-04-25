@@ -24,25 +24,27 @@ public:
 
 };
 
+// Takes care of admin for managing drink stock
 class MaintenanceSystem { //Old Code
 private:
-	std::vector<Beverage> beverageCatalog;
+	std::vector<Beverage> beverageCatalog; // Code needed to perform maintenance tasks
 	const std::string accessCode;
-	static const int MAX_DRINK_REFILL = 50;
-	static const int MAX_LABELNAME_LENGTH = 20;
-    const float MIN_COST_VALUE = 0.50f;
-    const float MAX_COST_VALUE = 10.00f;
+	static const int MAX_DRINK_REFILL = 50; // Stops overfilling
+	static const int MAX_LABELNAME_LENGTH = 20; //Keeps label formatting consistent
+    const float MIN_COST_VALUE = 0.50f; // Min Cost Limit
+    const float MAX_COST_VALUE = 10.00f; // Max Cost Limit
 
-	std::vector<Beverage> prepareBeverage();
-	bool verifyMaintenanceUser();
-	void ShowInventory();
-	void refillBeverage();
-	void updateBeverageDetails();
-	void showMaintenanceMenu();
+        // Utility functions for system tasks
+	std::vector<Beverage> prepareBeverage(); // setting up defaults or tests
+	bool verifyMaintenanceUser(); // verifiying user security
+	void ShowInventory(); // Show Current Drinks
+	void refillBeverage(); // Restocking Drinks
+	void updateBeverageDetails(); //Changing prices and names
+	void showMaintenanceMenu(); // offering a user friendly menu
 
 public:
-	MaintenanceSystem();
-	void start();
+	MaintenanceSystem(); // constructor
+	void start(); // Kick off for MaintenanceSystem
 };
 
 #endif
