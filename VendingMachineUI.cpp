@@ -76,6 +76,17 @@ void VendingMachineUI::run() {
         displayMenu();                 // Show menu options
         int choice;
         cin >> choice;                 // Get user input
+        
+        int choice;
+        if (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number from the menu.\n";
+            continue;
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> choice;                 // Get user input
 
         switch (choice) {
             case 1:
