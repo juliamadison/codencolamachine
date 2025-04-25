@@ -11,14 +11,6 @@ MaintenanceSystem::MaintenanceSystem() : accessCode("1234") {
 
 }
 
-std::vector<Beverage> MaintenanceSystem::prepareBeverage() {
-	return{
-		Beverage("Cola", 1.50f, 12),
-		Beverage("Sprite", 1.25f, 9),
-		Beverage("Water", 1.00f, 14)
-	};
-}
-
 bool MaintenanceSystem::verifyMaintenanceUser() {
     string displayCode;
     std::cout << "Enter maintenance access code: ";
