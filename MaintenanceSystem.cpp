@@ -11,7 +11,7 @@ MaintenanceSystem::MaintenanceSystem() : slotID("1234") {
 
 }
 
-std::vector<Beverage> MaintenanceSystem::prepareBeverage() {
+std::vector<Beverage> MaintenanceSystem::initalizeBeverage() {
 	return{
 		Beverage("Cola", 1f, 3),
 		Beverage("Sprite", 1f, 3),
