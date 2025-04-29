@@ -1,26 +1,32 @@
 #include "Bin.h"
 
+// Constructor clears the bin initially
 Bin::Bin() {
    trayContents.clear();
 }
 
+// Returns true if there are no sodas in the bin
 bool Bin::isEmpty() const {
    return trayContents.empty();
 }
 
-void Bin::addToTray(const SodaSlot& slot) {
-   trayContents.push_back(slot);
+// Adds a SodaCan to the bin
+void Bin::addToTray(const SodaCan& can) {
+   trayContents.push_back(can);
 }
 
-SodaSlot Bin::removeFromTray() {
+// Removes and returns the last SodaCan
+// If bin is empty, returns an empty SodaCan
+SodaCan Bin::removeFromTray() {
    if (!trayContents.empty()) {
-      SodaSlot last = trayContents.back();
+      SodaCan last = trayContents.back();
       trayContents.pop_back();
       return last;
    }
-   return SodaSlot(); // Return default SodaSlot if bin is empty
+   return SodaCan();
 }
 
+// Returns the number of sodas in the bin
 int Bin::getSize() const {
    return static_cast<int>(trayContents.size());
 }

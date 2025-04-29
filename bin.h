@@ -2,18 +2,29 @@
 #define BIN_H
 
 #include <vector>
+#include "SodaCan.h"
 
-class Product;
-
-class Bin
-{
+// Class that represents the collection bin in the vending machine.
+// The bin holds sodas that have been dispensed to the user.
+class Bin {
 private:
-    std::vector<Product> trayContents;
+   std::vector<SodaCan> trayContents; // Stores the dispensed sodas
 
 public:
-    bool isEmpty();
-    void addToTray(Product product);
-    Product removeFromTray();
+   // Default constructor
+   Bin();
+
+   // Check if the bin is empty
+   bool isEmpty() const;
+
+   // Add a SodaCan to the bin
+   void addToTray(const SodaCan& can);
+
+   // Remove and return the last SodaCan from the bin
+   SodaCan removeFromTray();
+
+   // Get how many sodas are currently in the bin
+   int getSize() const;
 };
 
 #endif
